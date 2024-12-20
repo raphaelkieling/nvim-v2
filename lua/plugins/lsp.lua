@@ -1,4 +1,4 @@
-local languages = { "lua_ls", "rust_analyzer" }
+local languages = { "lua_ls", "rust_analyzer", "gopls" }
 
 -- On attach to the LSP, setup the keybindings
 function handler_on_attach(client, bufnr)
@@ -6,13 +6,14 @@ function handler_on_attach(client, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
 
 	-- All the keybinding for LSP
-	local opts = { noremap = true, silent = true }
-	vim.api.nvim_set_keymap("n", "g+d", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	vim.api.nvim_set_keymap("n", "g+D", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	vim.api.nvim_set_keymap("n", "g+h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-	vim.api.nvim_set_keymap("n", "g+I", "<cmd>Telescope lsp_implementations<CR>", opts)
-	vim.api.nvim_set_keymap("n", "g+b", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-	vim.api.nvim_set_keymap("n", "g+r", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
+	local opts = { noremap = false, silent = true }
+	vim.api.nvim_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+	vim.api.nvim_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+	vim.api.nvim_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', { noremap = true, silent = true })
+	vim.api.nvim_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
+	vim.api.nvim_set_keymap('n', 'rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
+	vim.api.nvim_set_keymap('n', ']d', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>', { noremap = true, silent = true })
+	vim.api.nvim_set_keymap('n', '[d', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', { noremap = true, silent = true })
 end
 
 return {
@@ -21,12 +22,10 @@ return {
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
 		},
 		config = function()
 			-- Config from: https://github.com/williamboman/mason-lspconfig.nvim
-			require("mason").setup()
-			require("mason-lspconfig").setup({
+			require("mason").setup({
 				ensure_installed = languages,
 			})
 
