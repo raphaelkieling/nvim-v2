@@ -1,3 +1,5 @@
+local languages = { "lua_ls", "rust_analyzer" }
+
 -- On attach to the LSP, setup the keybindings
 function handler_on_attach(client, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -16,15 +18,13 @@ end
 return {
 	-- Install formatters and lsp stuff
 	{
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
-	},
-	{
 		"neovim/nvim-lspconfig",
+		dependencies = {
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+		},
 		config = function()
-			-- Mason
 			-- Config from: https://github.com/williamboman/mason-lspconfig.nvim
-			local languages = { "lua_ls", "rust_analyzer" }
 			require("mason").setup()
 			require("mason-lspconfig").setup({
 				ensure_installed = languages,
@@ -41,16 +41,28 @@ return {
 		"hrsh7th/nvim-cmp",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-cmdline",
 		},
 		config = function()
 			local cmp = require("cmp")
 			cmp.setup({
+				completion = {
+					autocomplete = { cmp.TriggerEvent.TextChanged },
+				},
 				mapping = cmp.mapping.preset.insert({
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
 				}),
 				sources = {
 					{ name = "nvim_lsp" },
 					{ name = "buffer" },
+					{ name = "cmdline" },
+				},
+			})
+
+			cmp.setup.cmdline(":", {
+				sources = {
+					{ name = "cmdline" }, -- Autocomplete for command ':'
+					{ name = "path" }, -- Complete for current path
 				},
 			})
 
