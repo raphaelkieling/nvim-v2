@@ -10,7 +10,7 @@ function handler_on_attach(client, bufnr)
 	vim.api.nvim_set_keymap("n", "g+h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 	vim.api.nvim_set_keymap("n", "g+I", "<cmd>Telescope lsp_implementations<CR>", opts)
 	vim.api.nvim_set_keymap("n", "g+b", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-	vim.api.nvim_set_keymap("n", "g+r", "<Cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("n", "g+r", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
 end
 
 return {
