@@ -1,4 +1,4 @@
-local languages = { "lua_ls", "rust_analyzer", "gopls", "ts_ls" }
+Languages = { "lua_ls", "rust_analyzer", "gopls", "ts_ls" }
 
 -- On attach to the LSP, setup the keybindings
 function handler_on_attach(client, bufnr)
@@ -14,6 +14,7 @@ function handler_on_attach(client, bufnr)
 	vim.api.nvim_set_keymap("n", "rn", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
 	vim.api.nvim_set_keymap("n", "]d", "<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
 	vim.api.nvim_set_keymap("n", "[d", "<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
+	vim.api.nvim_set_keymap('n', '<leader>ft', '<Cmd>:lua vim.diagnostic.setloclist()<CR>', opts)
 end
 
 return {
@@ -29,11 +30,11 @@ return {
 			require("mason").setup()
 
 			require("mason-lspconfig").setup({
-				ensure_installed = languages,
+				ensure_installed = Languages,
 				automatic_installation = true,
 			})
 
-			for _, lang in ipairs(languages) do
+			for _, lang in ipairs(Languages) do
 				require("lspconfig")[lang].setup({
 					on_attach = handler_on_attach,
 				})
