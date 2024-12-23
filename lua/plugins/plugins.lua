@@ -59,11 +59,12 @@ return {
 				layout_strategy = "horizontal",
 				layout_config = { prompt_position = "top" },
 				sorting_strategy = "ascending",
-				winblend = 0,
+				winblend = 0
 			},
 		},
 		config = function()
 			local builtin = require("telescope.builtin")
+
 			vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Telescope find files" })
 			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
 			vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })

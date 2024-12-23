@@ -34,7 +34,6 @@ api.nvim_set_keymap('n', '<C-l>', ':wincmd l<CR>', { noremap = true, silent = tr
 -- Terminal 
 api.nvim_set_keymap('t', '<C-e>', [[<C-\><C-n>]], { noremap = true, silent = true })
 
-
 -- Yank highlight
 api.nvim_exec([[
   augroup YankHighlight
