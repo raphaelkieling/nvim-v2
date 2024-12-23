@@ -28,14 +28,15 @@ return {
 				filters = {
 					dotfiles = false,
 				},
-				-- Disable all icons
+				-- Disable all icons, useful
+				-- when does not have nerd font
 				renderer = {
 					icons = {
-						show = {
-							folder = false,
-							file = false,
-							folder_arrow = false,
-						},
+						-- show = {
+						-- 	folder = false,
+						-- 	file = false,
+						-- 	folder_arrow = false,
+						-- },
 					},
 				},
 
