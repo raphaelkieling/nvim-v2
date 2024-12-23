@@ -28,6 +28,7 @@ return {
 				filters = {
 					dotfiles = false,
 				},
+				-- Disable all icons
 				renderer = {
 					icons = {
 						show = {

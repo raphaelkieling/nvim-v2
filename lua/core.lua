@@ -20,6 +20,7 @@ o.ignorecase = true
 o.smartcase = true
 o.history = 1000
 o.scrolloff = 8
+o.encoding = "utf-8"
 
 -- Disable default tree
 g.loaded_netrw = 1
