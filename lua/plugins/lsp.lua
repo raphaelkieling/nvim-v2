@@ -54,7 +54,7 @@ return {
 					autocomplete = { cmp.TriggerEvent.TextChanged },
 				},
 				mapping = cmp.mapping.preset.insert({
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<C-r>"] = cmp.mapping.confirm({ select = true }),
 				}),
 				sources = {
 					{ name = "nvim_lsp" },
