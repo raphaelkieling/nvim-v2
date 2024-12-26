@@ -5,6 +5,8 @@ Personal nvim with:
 - LSP with Mason + Mason LSP + CMP, for LSP stuff
 - Conform, for formatting
 - Trouble, to show issues on lines
+- Startup
+- Session Management to open and close projects
 
 ## Recommendations for me at future
 

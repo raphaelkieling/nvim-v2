@@ -1,4 +1,22 @@
 return {
+	-- Dashboard
+	{
+		"goolord/alpha-nvim",
+		dependencies = { 'nvim-tree/nvim-web-devicons' },
+		config = function()
+			local startify = require("alpha.themes.startify")
+			startify.file_icons.provider = "devicons"
+			require("alpha").setup(
+			startify.config
+			)
+		end,
+	},
+	-- Session Management, open the last session 
+	{
+		'rmagatti/auto-session',
+		lazy = false,
+		opts = {}
+	},
 	-- Hop
 	{
 		"smoka7/hop.nvim",
@@ -20,30 +38,35 @@ return {
 	-- Treefile
 	{
 		"nvim-tree/nvim-tree.lua",
+		dependencies = {
+			'kyazdani42/nvim-web-devicons'
+		},
 		config = function()
 			require("nvim-tree").setup({
+				diagnostics = {
+					enable = true,
+					show_on_dirs = false,
+					icons = {
+						hint = "",
+						info = "",
+						warning = "",
+						error = "",
+					},
+				},
 				update_focused_file = {
 					enable = true,
+				},
+				view={
+					adaptive_size=true,
 				},
 				filters = {
 					dotfiles = false,
 				},
-				-- Disable all icons, useful
-				-- when does not have nerd font
-				renderer = {
-					icons = {
-						-- show = {
-						-- 	folder = false,
-						-- 	file = false,
-						-- 	folder_arrow = false,
-						-- },
-					},
-				},
-
 			})
 
 			vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
-			vim.api.nvim_set_keymap("n", "<leader>fe", ":NvimTreeFindFile<CR>", { noremap = true, silent = true })
+			-- Probably deprecated. Since i'm using the update_focused_file.
+			-- vim.api.nvim_set_keymap("n", "<leader>fe", ":NvimTreeFindFile<CR>", { noremap = true, silent = true })
 		end,
 	},
 	-- Show errors on lines
@@ -126,4 +149,34 @@ return {
 			{ "<leader>g", "<cmd>LazyGit<cr>", desc = "LazyGit" },
 		},
 	},
+	-- Autoclose
+	{
+		'windwp/nvim-autopairs',
+		event = "InsertEnter",
+		config = true
+	},
+	-- Jump between specific pages
+	{
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			local harpoon = require("harpoon")
+			harpoon:setup()
+
+			local add = function()
+				print("Harpoon added")
+				harpoon:list():add()
+			end
+
+			vim.keymap.set("n", "<leader>a", add)
+			vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+			vim.keymap.set("n", "<leader>1", function() harpoon:list():select(1) end)
+			vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end)
+			vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end)
+			vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end)
+
+		end
+	}
 }
