@@ -1,7 +1,7 @@
-Languages = { "lua_ls", "rust_analyzer", "gopls", "ts_ls" }
+Languages = { "lua_ls", "rust_analyzer", "gopls", "ts_ls", "yamlls", "jsonls" }
 
 -- On attach to the LSP, setup the keybindings
-function handler_on_attach(client, bufnr)
+function Handler_on_attach(_, bufnr)
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
     vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
 
@@ -37,7 +37,7 @@ return {
 
             for _, lang in ipairs(Languages) do
                 require("lspconfig")[lang].setup({
-                    on_attach = handler_on_attach,
+                    on_attach = Handler_on_attach,
                 })
             end
         end,
@@ -83,12 +83,12 @@ return {
         opts = {
             formatters_by_ft = {
                 lua = { "stylua" },
-                -- Conform will run multiple formatters sequentially
                 python = { "isort", "black" },
-                -- You can customize some of the format options for the filetype (:help conform.format)
                 rust = { "rustfmt", lsp_format = "fallback" },
-                -- Conform will run the first available formatter
                 javascript = { "prettierd", "prettier", stop_after_first = true },
+                yaml = { "yamlfix" },
+                json = { "jq" },
+                typescript = { "prettierd" },
             },
         },
         event = { "BufWritePre" },
@@ -96,7 +96,7 @@ return {
         keys = {
             {
                 -- Customize or remove this keymap to your liking
-                "<leader>f",
+                "<leader>ff",
                 function()
                     require("conform").format({ async = true })
                 end,
