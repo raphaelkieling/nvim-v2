@@ -88,7 +88,7 @@ return {
                 javascript = { "prettierd", "prettier", stop_after_first = true },
                 yaml = { "yamlfix" },
                 json = { "jq" },
-                typescript = { "prettierd" },
+                typescript = { "prettierd", "prettier", stop_after_first = true },
             },
         },
         event = { "BufWritePre" },
