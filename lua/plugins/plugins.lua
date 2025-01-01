@@ -1,4 +1,9 @@
 return {
+    -- Smooth Cursor
+    {
+        "sphamba/smear-cursor.nvim",
+        opts = {},
+    },
     -- Dashboard
     {
         "goolord/alpha-nvim",
