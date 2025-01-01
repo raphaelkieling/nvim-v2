@@ -21,7 +21,17 @@ o.smartcase = true
 o.history = 1000
 o.scrolloff = 8
 o.encoding = "utf-8"
+-- Make it a bit faster
 o.updatetime = 100
+
+-- Make the deletion better
+api.nvim_set_keymap('n', 'd', '"_d', { noremap = true, silent = true })
+api.nvim_set_keymap('v', 'd', '"_d', { noremap = true, silent = true })
+
+-- Accept uppercase file op
+api.nvim_create_user_command("WQ", "wq", {})
+api.nvim_create_user_command("W", "w", {})
+api.nvim_create_user_command("Q", "q", {})
 
 -- Disable default tree
 g.loaded_netrw = 1
